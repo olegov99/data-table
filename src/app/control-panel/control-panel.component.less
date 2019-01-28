@@ -1,0 +1,108 @@
+.control-panel {
+  position: fixed;
+  height: 100%;
+  width: 280px;
+  left: 0;
+  background: #fff;
+  color: #2d3436;
+  box-shadow: 0px 0px 15px #000;
+  overflow: hidden;
+  &__search {
+    position: relative;
+    margin-top: 80px;
+    text-align: center;
+    &-input {
+      padding: 5px;
+      font-family: 'Roboto', FontAwesome;
+      font-size: 16px;
+      color: #2d3436;
+      border: none;
+      outline: none;
+      border-bottom: 1px solid #b2bec3;
+      width: 180px;
+      &:focus ~ .control-panel__search-bar:after {
+        width: 100%;
+      }
+    }
+    &-bar {
+      position: relative;
+      width: 190px;
+      display: block;
+      left: 50%;
+      transform: translateX(-50%);
+      &:after {
+        content: "";
+        height: 2px;
+        width: 0;
+        left: 0;
+        bottom: 0px;
+        background: #0984e3;
+        position: absolute;
+        transition: 300ms ease;
+      }
+    }
+  }
+
+  &__low-scores {
+    margin-top: 50px;
+    padding-left: 40px;
+  }
+
+  &__filter {
+    &-scores {
+      margin-top: 40px;
+      h4 {
+        text-align: center;
+      }
+      &-item {
+        padding-left: 40px;
+        margin: 10px 0;
+      }
+    }
+    &-birthdate {
+      margin-top: 30px;
+      text-align: right;
+      h4 {
+        text-align: center;
+      }
+      &-item {
+        padding: 5px;
+        padding-right: 40px;
+      }
+      input[type="date"] {
+        margin-left: 15px;
+      }
+    }
+  }
+
+  input[type="checkbox"] {
+    display: none;
+    + label {
+      display: inlin-block;
+      cursor: pointer;
+      padding: 0.3em;
+    }
+    + label:before {
+      content: "\2714";
+      border: 0.1em solid #b2bec3;
+      border-radius: 0.2em;
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      padding-left: 0.2em;
+      padding-bottom: 0.3em;
+      margin-right: 0.6em;
+      vertical-align: bottom;
+      color: transparent;
+      transition: 200ms;
+    }
+    + label:active:before {
+      transform: scale(0);
+    }
+    &:checked + label:before {
+      background: #0984e3;
+      border-color: #0984e3;
+      color: #fff;
+    }
+  }
+}

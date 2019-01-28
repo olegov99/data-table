@@ -1,0 +1,28 @@
+<app-control-panel></app-control-panel>
+<div class="data-table-container">
+    <table class="data-table">
+        <tr class="data-table__headers">
+          <th><button class="data-table__headers-button" (click)="sortByFirstName()">First Name <i class="fas fa-sort"></i></button></th>
+          <th><button class="data-table__headers-button" (click)="sortByLastName()">Last Name <i class="fas fa-sort"></i></button></th>
+          <th><button class="data-table__headers-button" (click)="sortByBirthdate()">Birthdate <i class="fas fa-sort"></i></button></th>
+          <th><button class="data-table__headers-button" (click)="sortByScore()">Average Score <i class="fas fa-sort"></i></button></th>
+          <th>Remove</th>
+        </tr>
+        <tr class="data-table__students"
+        *ngFor="let student of getStudents()"
+        [ngClass]="{'bg-green': student.firstName === getSearchStudent() || student.lastName === getSearchStudent(),
+                    'bg-red': isLow(student.averageScore) && dataTableService.getBgRed()}">
+          <td>{{ student.firstName }}</td>
+          <td>{{ student.lastName }}</td>
+          <td>{{ student.birthDate | date }}</td>
+          <td>{{ student.averageScore }}</td>
+          <td><button class="data-table__students-remove-button" (click)="openPopup(student.id)"><i class="fas fa-trash-alt"></i></button></td>
+        </tr>
+      </table>
+</div>
+<div class="popup-overlay" [ngStyle]="isPopupOpen()===true?{'display': 'block'}:{'display': 'none'}"></div>
+<div class="remove-popup" [ngStyle]="isPopupOpen()===true?{'display': 'block'}:{'display': 'none'}">
+  <p>Are you sure you want to remove this item?</p>
+  <button (click)="removeStudent()">Yes</button>
+  <button (click)="closePopup()">Cancel</button>
+</div>
