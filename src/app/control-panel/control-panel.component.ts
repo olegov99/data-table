@@ -15,6 +15,7 @@ export class ControlPanelComponent implements OnInit {
   ngOnInit() {
     this.setBgRed(true);
     this.setScoreFilter();
+    this.setBirthdateFilter();
   }
 
   setSearchStudent(value: string) {
@@ -37,17 +38,19 @@ export class ControlPanelComponent implements OnInit {
     this.dataTableService.addScoreFilter(index, value);
   }
 
-  getIndex(index): number {
-    return index;
-  }
-
   setBirthdateFilter(): void {
     this.birthdateFilter = this.dataTableService.getBirthdateFilter();
   }
 
   addBirthdateFilter(index: number, value: string): void {
-    console.log(value);
     this.dataTableService.addBirthdateFilter(index, value);
   }
 
+  getIndex(index): number {
+    return index;
+  }
+
+  openAddStudentPopup(): void {
+    this.dataTableService.openAddStudentPopup();
+  }
 }

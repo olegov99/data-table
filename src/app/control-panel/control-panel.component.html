@@ -1,11 +1,14 @@
 <div class="control-panel">
+  <div class="control-panel__add-student">
+    <div class="control-panel__add-student-button" (click)="openAddStudentPopup()">Add new student</div>
+  </div>
   <div class="control-panel__search">
       <input name="search" 
       type="text" 
       class="control-panel__search-input" 
       placeholder="&#xF002; Search"
       (input)="setSearchStudent($event.target.value)">
-      <span class="control-panel__search-bar"></span>
+      <span class="bar"></span>
   </div>
   <div class="control-panel__low-scores">
     <input id="low-scores" 
@@ -13,9 +16,26 @@
     class="control-panel__low-scores-checkbox"
     (change)="setBgRed($event.target.checked)"
     [checked]="getBgRed()">
-    <label for="low-scores">Highlight low scores</label>
+    <label for="low-scores"><h4>Highlight low scores</h4></label>
   </div>
   <div class="control-panel__filter">
+    <div class="control-panel__filter-birthdate">
+      <h4 class="control-panel__filter-birthdate-title">Filter by birthdate</h4>
+      <div class="control-panel__filter-birthdate-item">
+          <label for="from">From</label>
+          <input type="date"
+          id="from"
+          (change)="addBirthdateFilter(0, $event.target.value)">
+            <span class="bar"></span>
+      </div>
+      <div class="control-panel__filter-birthdate-item">
+          <label for="to">To</label>
+          <input type="date"
+          id="to"
+          (change)="addBirthdateFilter(1, $event.target.value)">
+          <span class="bar"></span>
+      </div>
+    </div>
     <div class="control-panel__filter-scores">
       <h4 class="control-panel__filter-scores-title">Filter by average score</h4>
       <div *ngFor="let filterItem of scoreFilter; let i=index; trackBy: getIndex"
@@ -26,21 +46,6 @@
         [checked]="filterItem"
         (change)="addScoreFilter($event.target.value, $event.target.checked)">
        <label for="score-{{i}}">{{ i+1 }}</label>
-      </div>
-    </div>
-    <div class="control-panel__filter-birthdate">
-      <h4 class="control-panel__filter-birthdate-title">Filter by birthdate</h4>
-      <div class="control-panel__filter-birthdate-item">
-          <label for="from">From</label>
-          <input type="date"
-          id="from"
-          (change)="addBirthdateFilter(0, $event.target.value)">
-      </div>
-      <div class="control-panel__filter-birthdate-item">
-          <label for="to">To</label>
-          <input type="date"
-          id="to"
-          (change)="addBirthdateFilter(1, $event.target.value)">
       </div>
     </div>
   </div>

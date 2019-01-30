@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Student } from './student';
 import { STUDENTS } from './mock-students';
+import { IStudentData } from './student-data';
 
 
 @Injectable({
@@ -11,12 +12,44 @@ export class DataTableService {
   private _searchStudent: string;
   private _bgRedCheckbox: boolean;
   private _scoresFilter: boolean[] = [true, true, true, true, true];
-  private _birthdateFilter: Date[] = [new Date(1900, 5, 5), new Date(2015, 5, 5)];
+  private _birthdateFilter: Date[] = [new Date( 0, 0, 0), new Date()];
   private _students: Student[];
   private _filteredStudents: Student[];
+  private _addStudentPopup: boolean;
+  private _editStudentPopup: boolean;
+  private _openedStudent: Student;
 
   constructor() {
     this.setStudents();
+  }
+
+  getOpenedStudent(): Student {
+    return this._openedStudent;
+  }
+
+  openEditStudentPopup(student: Student): void {
+    this._editStudentPopup = true;
+    this._openedStudent = student;
+  }
+
+  isEditStudentPopupOpen(): boolean {
+    return this._editStudentPopup;
+  }
+
+  closeEditStudentPopup(): void {
+    this._editStudentPopup = false;
+  }
+
+  openAddStudentPopup(): void {
+    this._addStudentPopup = true;
+  }
+
+  isAddStudentPopupOpen(): boolean {
+    return this._addStudentPopup;
+  }
+
+  closeAddStudentPopup(): void {
+    this._addStudentPopup = false;
   }
 
   getSearchStudent(): string {
@@ -25,7 +58,6 @@ export class DataTableService {
 
   setSearchStudent(queryString: string): void {
     this._searchStudent = this.capitalizeFirstLetter(queryString);
-    console.log(queryString);
   }
 
   getBgRed(): boolean {
@@ -38,11 +70,7 @@ export class DataTableService {
 
   addScoreFilter(score: number, selectedScore: boolean): void {
     this._scoresFilter[score] = selectedScore;
-    this.filterStudents();
-  }
-
-  getScoreFilterValue(score: number) {
-    return this._scoresFilter[score];
+    this.updateStudents();
   }
 
   getScoreFilter(): boolean[] {
@@ -51,7 +79,7 @@ export class DataTableService {
 
   addBirthdateFilter(index: number, birthdate: string): void {
     this._birthdateFilter[index] = this.parseDate(birthdate);
-    this.filterStudents();
+    this.updateStudents();
   }
 
   getBirthdateFilter(): Date[] {
@@ -64,7 +92,7 @@ export class DataTableService {
 
   setStudents(): void {
     this._students = STUDENTS;
-    this.filterStudents();
+    this.updateStudents();
   }
 
   sortByFirstName(): void {
@@ -81,7 +109,7 @@ export class DataTableService {
 
   sortByBirthdate(): void {
     this._filteredStudents = this._filteredStudents.sort((firstStudent: Student, secondStudent: Student) => {
-      return firstStudent.birthDate.getTime() > secondStudent.birthDate.getTime() ? 1 : -1;
+      return firstStudent.birthdate.getTime() > secondStudent.birthdate.getTime() ? 1 : -1;
     });
   }
 
@@ -101,15 +129,38 @@ export class DataTableService {
     this._students = this._students.filter(student => {
       return student.id !== studentID;
     });
-    this.filterStudents();
+    this.updateStudents();
   }
 
-  private filterStudents(): void {
-    const birthdateFrom: number = this._birthdateFilter[0].getTime();
-    const birthdateTo: number = this._birthdateFilter[1].getTime();
-    this._filteredStudents = this._students.filter(student => {
+  addStudent(studentData: IStudentData): void {
+    const _student = this.createStudentInstance(studentData);
+    this._students.push(_student);
+    this.updateStudents();
+  }
+
+  createStudentInstance(studentData: IStudentData): Student {
+    const _firstName = this.capitalizeFirstLetter(studentData.firstName);
+    const _lastName = this.capitalizeFirstLetter(studentData.lastName);
+    const _birthdate = studentData.birthdate;
+    const _averageScore = studentData.averageScore;
+    const _id = this.generateStudentID();
+    return new Student(_firstName, _lastName, _birthdate, _averageScore, _id);
+  }
+
+  generateStudentID(): number {
+    return this._students[this._students.length - 1].id + 1;
+  }
+
+  private updateStudents(): void {
+    this._filteredStudents = this.filterStudents();
+  }
+
+  private filterStudents(): Student[] {
+    const _birthdateFrom: number = this._birthdateFilter[0].getTime();
+    const _birthdateTo: number = this._birthdateFilter[1].getTime();
+    return this._students.filter(student => {
        if (this._scoresFilter[student.averageScore - 1] === true) {
-         if (birthdateFrom < student.birthDate.getTime() && birthdateTo > student.birthDate.getTime()) {
+         if (_birthdateFrom < student.birthdate.getTime() && _birthdateTo > student.birthdate.getTime()) {
            return student;
          }
        }

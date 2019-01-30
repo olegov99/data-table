@@ -1,0 +1,61 @@
+<div class="component-container" [ngStyle]="isPopupOpen()?{'display': 'block'}:{'display': 'none'}">
+    <div class="overlay"></div>
+    <div class="add-student-popup">
+      <form class="add-student-popup__form" [formGroup]="studentForm">
+        <div class="add-student-popup__form-group" formGroupName="fullName">
+          <div class="first-name">
+            <input type="text" 
+            formControlName="firstNameControl" 
+            placeholder="First name" 
+            [ngClass]="{'error': isFullNameInvalid()}" required>
+            <span class="bar"></span>
+            <div class="alert"
+            [ngStyle]="isFirstNameEmpty()?{'display': 'block'}:{'display': 'none'}">First name is required!</div>
+            <div class="alert" 
+            [ngStyle]="isFirstNameInvalid() && !isFirstNameEmpty()?{'display': 'block'}:{'display': 'none'}">
+            First name must be at least 3 characters!</div>
+            <div class="alert" 
+            [ngStyle]="!isFirstNameInvalid() && isFullNameInvalid()?{'display': 'block'}:{'display': 'none'}">
+            First name and last name must be different!</div>
+          </div>
+          <div class="last-name">
+            <input type="text" 
+            formControlName="lastNameControl" 
+            placeholder="Last name" 
+            [ngClass]="{'error': isFullNameInvalid()}" required>
+            <span class="bar"></span>
+            <div class="alert" 
+            [ngStyle]="isLastNameEmpty()?{'display': 'block'}:{'display': 'none'}">Last name is required!</div>
+            <div class="alert" 
+            [ngStyle]="isLastNameInvalid() && !isLastNameEmpty()?{'display': 'block'}:{'display': 'none'}">
+            Last name must be at least 3 characters!</div>
+            <div class="alert" 
+            [ngStyle]="!isFirstNameInvalid() && isFullNameInvalid()?{'display': 'block'}:{'display': 'none'}">
+            First name and last name must be different!</div>
+          </div>
+        </div>
+          <div class="add-student-popup__form-group">
+            <label for="birthdate">Birthdate</label>
+            <input id="birthdate" type="date" formControlName="birthdateControl" required> 
+            <span class="bar"></span> 
+            <div class="alert" 
+            [ngStyle]="isBirthdateInvalid()?{'display': 'block'}:{'display': 'none'}">Birthdate is required!</div>
+            <div class="alert" 
+            [ngStyle]="isBirthdateEdgeInvalid()?{'display': 'block'}:{'display': 'none'}">Birthdate must be no greater than 10 years ago!</div>
+          </div>
+          <div class="add-student-popup__form-group">
+            <input type="text" formControlName="averageScoreControl" placeholder="Average score" required>
+            <span class="bar"></span>
+            <div class="alert" 
+            [ngStyle]="isAverageScoreInvalid()?{'display': 'block'}:{'display': 'none'}">Average score is required!</div>
+          </div>
+          <button type="submit" 
+          class="add-student-button" 
+          (click)="onSubmit()"
+          [disabled]="!studentForm.valid">Update</button>
+      </form>
+      <button class="close-button"(click)="closePopup()">
+          <span class="close-button__cross"></span>
+      </button>
+    </div>
+  </div>

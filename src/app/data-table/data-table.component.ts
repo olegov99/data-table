@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {IPopup } from '../popup';
 import { DataTableService } from '../data-table.service';
+import { Student } from '../student';
+
 
 @Component({
   selector: 'app-data-table',
@@ -66,5 +68,9 @@ export class DataTableComponent implements OnInit {
     } else {
       this.closePopup();
     }
+  }
+
+  openEditStudentPopup(student: Student): void {
+    this.dataTableService.openEditStudentPopup(student);
   }
 }

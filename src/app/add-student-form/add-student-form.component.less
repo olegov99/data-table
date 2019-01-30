@@ -1,0 +1,149 @@
+.component-container {
+  position: fixed;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+  .overlay {
+    position: absolute;
+    background: rgba(10,10,10,0.7);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .add-student-popup {
+    position: absolute;
+    top: 20%;
+    left: 60%;
+    transform: translateX(-50%);
+    background: #fff;
+    width: 400px;
+    height: 450px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    &__form {
+      position: relative;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      &-group {
+        margin-bottom: 30px;
+        .alert {
+          text-align: left;
+          padding: 4px 0;
+          padding-left: 60px;
+          color: #ff7675;
+          font-size: 12px;
+          display: none;
+          position: absolute;
+        }
+        .first-name {
+          margin-bottom: 20px;
+        }
+        input[type="text"], input[type="date"] {
+          padding: 10px 5px;
+          font-family: 'Roboto', FontAwesome;
+          font-size: 16px;
+          color: #2d3436;
+          border: none;
+          outline: none;
+          border-bottom: 1px solid #b2bec3;
+          width: 280px;
+          background: none;
+          &:focus + .bar:after {
+            width: 100%;
+            transition: 300ms ease;
+          }
+          &.ng-invalid + .bar:after {
+            background: #ff7675;
+          }
+          &.error + .bar:after {
+            background: #ff7675;
+          }
+        }
+        input[type="date"] {
+          text-transform: uppercase;
+          padding-top: 5px;
+          font-size: 14px;
+        }
+        label {
+          position: relative;
+          font-size: 12px;
+          display: block;
+          text-align: left;
+          padding-left: 60px;
+          color: #777;
+        }
+        .bar {
+          position: relative;
+          width: 290px;
+          display: block;
+          left: 50%;
+          transform: translateX(-50%);
+          &:after {
+            content: "";
+            height: 2px;
+            width: 0;
+            left: 0;
+            bottom: 0px;
+            background: #0984e3;
+            position: absolute;
+          }
+        }
+      }
+      .add-student-button {
+        border: none;
+        outline: none;
+        font-family: 'Roboto';
+        font-size: 14px;
+        text-transform: uppercase;
+        color: #fff;
+        background: #0984e3;
+        padding: 10px 50px;
+        margin-top: 20px;
+        cursor: pointer;
+        &:disabled {
+          background: #999;
+          cursor: default;
+        }
+      }
+    }
+    .close-button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(50%, -50%);
+      background: #fff;
+      border: none;
+      outline: none;
+      padding: 10px 10px 7px;
+      border-radius: 50%;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+      cursor: pointer;
+      &__cross{
+        position: relative;
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        overflow: hidden;
+        &::before, &::after {
+          content: '';
+          position: absolute;
+          height: 2px;
+          width: 100%;
+          top: 50%;
+          left: 0;
+          margin-top: -2px;
+          background: #222;
+          border-radius: 100%;
+        }
+        &::before {
+          transform: rotate(45deg);
+        }
+        &::after {
+          transform: rotate(-45deg);
+        }
+      }
+    }
+  }
+}

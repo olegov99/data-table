@@ -1,4 +1,6 @@
 <app-control-panel></app-control-panel>
+<app-add-student-form></app-add-student-form>
+<app-edit-student-form></app-edit-student-form>
 <div class="data-table-container">
     <table class="data-table">
         <tr class="data-table__headers">
@@ -6,7 +8,7 @@
           <th><button class="data-table__headers-button" (click)="sortByLastName()">Last Name <i class="fas fa-sort"></i></button></th>
           <th><button class="data-table__headers-button" (click)="sortByBirthdate()">Birthdate <i class="fas fa-sort"></i></button></th>
           <th><button class="data-table__headers-button" (click)="sortByScore()">Average Score <i class="fas fa-sort"></i></button></th>
-          <th>Remove</th>
+          <th>Edit/Remove</th>
         </tr>
         <tr class="data-table__students"
         *ngFor="let student of getStudents()"
@@ -14,15 +16,25 @@
                     'bg-red': isLow(student.averageScore) && dataTableService.getBgRed()}">
           <td>{{ student.firstName }}</td>
           <td>{{ student.lastName }}</td>
-          <td>{{ student.birthDate | date }}</td>
+          <td>{{ student.birthdate | date }}</td>
           <td>{{ student.averageScore }}</td>
-          <td><button class="data-table__students-remove-button" (click)="openPopup(student.id)"><i class="fas fa-trash-alt"></i></button></td>
+          <td>
+            <button class="data-table__students-edit-button" (click)="openEditStudentPopup(student);"><i class="fas fa-edit"></i></button>
+            <button class="data-table__students-remove-button" (click)="openPopup(student.id)"><i class="fas fa-trash-alt"></i></button>
+          </td>
         </tr>
       </table>
 </div>
-<div class="popup-overlay" [ngStyle]="isPopupOpen()===true?{'display': 'block'}:{'display': 'none'}"></div>
-<div class="remove-popup" [ngStyle]="isPopupOpen()===true?{'display': 'block'}:{'display': 'none'}">
-  <p>Are you sure you want to remove this item?</p>
-  <button (click)="removeStudent()">Yes</button>
-  <button (click)="closePopup()">Cancel</button>
+<div class="remove-popup-container" [ngStyle]="isPopupOpen()?{'display': 'block'}:{'display': 'none'}">
+  <div class="popup-overlay"></div>
+  <div class="remove-popup">
+    <i class="fas fa-minus-circle"></i>
+    <h3>Are you sure?</h3>  
+    <p>Do you really want to remove this record?</p>
+    <button class="remove-button" (click)="removeStudent()">Remove</button>
+    <button class="cancel-button" (click)="closePopup()">Cancel</button>
+    <button class="close-button"(click)="closePopup()">
+        <span class="close-button__cross"></span>
+    </button>
+  </div>
 </div>
