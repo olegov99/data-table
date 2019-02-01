@@ -13,7 +13,7 @@
           [ngStyle]="isFirstNameEmpty()?{'display': 'block'}:{'display': 'none'}">First name is required!</div>
           <div class="alert" 
           [ngStyle]="isFirstNameInvalid() && !isFirstNameEmpty()?{'display': 'block'}:{'display': 'none'}">
-          First name must be at least 3 characters!</div>
+          First name must be at least 3 characters and <br> can only contain letters!</div>
           <div class="alert" 
           [ngStyle]="!isFirstNameInvalid() && isFullNameInvalid()?{'display': 'block'}:{'display': 'none'}">
           First name and last name must be different!</div>
@@ -28,7 +28,7 @@
           [ngStyle]="isLastNameEmpty()?{'display': 'block'}:{'display': 'none'}">Last name is required!</div>
           <div class="alert" 
           [ngStyle]="isLastNameInvalid() && !isLastNameEmpty()?{'display': 'block'}:{'display': 'none'}">
-          Last name must be at least 3 characters!</div>
+          Last name must be at least 3 characters and <br> can only contain letters!</div>
           <div class="alert" 
           [ngStyle]="!isFirstNameInvalid() && isFullNameInvalid()?{'display': 'block'}:{'display': 'none'}">
           First name and last name must be different!</div>
@@ -41,13 +41,19 @@
           <div class="alert" 
           [ngStyle]="isBirthdateInvalid()?{'display': 'block'}:{'display': 'none'}">Birthdate is required!</div>
           <div class="alert" 
-          [ngStyle]="isBirthdateEdgeInvalid()?{'display': 'block'}:{'display': 'none'}">Birthdate must be no greater than 10 years ago!</div>
+          [ngStyle]="isBirthdateEdgeInvalid()?{'display': 'block'}:{'display': 'none'}">Age must be higher than 10!</div>
         </div>
-        <div class="add-student-popup__form-group">
-          <input type="text" formControlName="averageScoreControl" placeholder="Average score" required>
-          <span class="bar"></span>
-          <div class="alert" 
-          [ngStyle]="isAverageScoreInvalid()?{'display': 'block'}:{'display': 'none'}">Average score is required!</div>
+        <div id="average-score" class="add-student-popup__form-group-scores">
+          <label class="average-scores-label" for="average-score">Average score</label>
+          <div class="average-score" *ngFor="let score of [1, 2, 3, 4, 5]">
+            <input id="radio-{{score}}" 
+            type="radio" 
+            class="average-score-radio" 
+            name="averageScoreControl" 
+            value="{{score}}" 
+            formControlName="averageScoreControl">
+            <label for="radio-{{score}}" class="radio-label">{{score}}</label>
+          </div>
         </div>
         <button type="submit" 
         class="add-student-button" 

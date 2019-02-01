@@ -13,23 +13,24 @@ export class DataTableService {
   private _bgRedCheckbox: boolean;
   private _scoresFilter: boolean[] = [true, true, true, true, true];
   private _birthdateFilter: Date[] = [new Date( 0, 0, 0), new Date()];
+  private _sorting: string;
   private _students: Student[];
   private _filteredStudents: Student[];
   private _addStudentPopup: boolean;
   private _editStudentPopup: boolean;
-  private _openedStudent: Student;
+  private _selectedStudent: Student;
 
   constructor() {
     this.setStudents();
   }
 
-  getOpenedStudent(): Student {
-    return this._openedStudent;
+  getSelectedStudent(): Student {
+    return this._selectedStudent;
   }
 
   openEditStudentPopup(student: Student): void {
     this._editStudentPopup = true;
-    this._openedStudent = student;
+    this._selectedStudent = student;
   }
 
   isEditStudentPopupOpen(): boolean {
@@ -60,7 +61,7 @@ export class DataTableService {
     this._searchStudent = this.capitalizeFirstLetter(queryString);
   }
 
-  getBgRed(): boolean {
+  isBgRed(): boolean {
     return this._bgRedCheckbox;
   }
 
@@ -95,26 +96,45 @@ export class DataTableService {
     this.updateStudents();
   }
 
+  sortBy(sorting: string): void {
+    this._sorting = sorting;
+    if (sorting === 'first-name') {
+      this.sortByFirstName();
+    }
+    if (sorting === 'last-name') {
+      this.sortByLastName();
+    }
+    if (sorting === 'birthdate') {
+      this.sortByBirthdate();
+    }
+    if (sorting === 'score') {
+      this.sortByScore();
+    }
+  }
+
   sortByFirstName(): void {
-    this._filteredStudents = this._filteredStudents.sort((firstStudent: Student, secondStudent: Student) => {
+    this._students = this._students.sort((firstStudent: Student, secondStudent: Student) => {
       return firstStudent.firstName > secondStudent.firstName ? 1 : -1;
     });
+    this.updateStudents();
   }
 
   sortByLastName(): void {
-    this._filteredStudents = this._filteredStudents.sort((firstStudent: Student, secondStudent: Student) => {
+    this._students = this._students.sort((firstStudent: Student, secondStudent: Student) => {
       return firstStudent.lastName > secondStudent.lastName ? 1 : -1;
     });
+    this.updateStudents();
   }
 
   sortByBirthdate(): void {
-    this._filteredStudents = this._filteredStudents.sort((firstStudent: Student, secondStudent: Student) => {
+    this._students = this._students.sort((firstStudent: Student, secondStudent: Student) => {
       return firstStudent.birthdate.getTime() > secondStudent.birthdate.getTime() ? 1 : -1;
     });
+    this.updateStudents();
   }
 
   sortByScore(): void {
-    this._filteredStudents = this._filteredStudents.sort((firstStudent: Student, secondStudent: Student) => {
+    this._students = this._students.sort((firstStudent: Student, secondStudent: Student) => {
       if (firstStudent.averageScore > secondStudent.averageScore) {
         return 1;
       }
@@ -123,6 +143,7 @@ export class DataTableService {
       }
       return 0;
     });
+    this.updateStudents();
   }
 
   removeStudent(studentID: number) {
@@ -138,7 +159,18 @@ export class DataTableService {
     this.updateStudents();
   }
 
-  createStudentInstance(studentData: IStudentData): Student {
+  editStudent(studentData: IStudentData): void {
+    for (const student of this._students) {
+      if (student.id === this._selectedStudent.id) {
+        student.firstName = this.capitalizeFirstLetter(studentData.firstName);
+        student.lastName = this.capitalizeFirstLetter(studentData.lastName);
+        student.birthdate = studentData.birthdate;
+        student.averageScore = studentData.averageScore;
+      }
+    }
+  }
+
+    createStudentInstance(studentData: IStudentData): Student {
     const _firstName = this.capitalizeFirstLetter(studentData.firstName);
     const _lastName = this.capitalizeFirstLetter(studentData.lastName);
     const _birthdate = studentData.birthdate;
