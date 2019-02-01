@@ -3,4 +3,5 @@ export interface IStudentData {
   lastName: string;
   birthdate: Date;
   averageScore: number;
+  id?: number;
 }

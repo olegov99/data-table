@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataTableService} from '../data-table.service';
 import { IStudentData} from '../student-data';
-import { identityRevealedValidator } from '../identity-revealed.directive';
-import { birthdateEdgeValidator } from '../birthdate-edge.directive';
+import { identityRevealedValidator, birthdateEdgeValidator } from '../custom-validators.directive';
 
 @Component({
   selector: 'app-add-student-form',
@@ -15,11 +14,13 @@ export class AddStudentFormComponent implements OnInit {
     fullName: new FormGroup({
       firstNameControl: new FormControl('', [
         Validators.required,
-        Validators.minLength(3)
+        Validators.minLength(3),
+        Validators.pattern('^[A-Za-z]+$')
       ]),
       lastNameControl: new FormControl('', [
         Validators.required,
-        Validators.minLength(3)
+        Validators.minLength(3),
+        Validators.pattern('^[A-Za-z]+$')
       ]),
     }, {validators: identityRevealedValidator}),
     birthdateControl: new FormControl('', [
@@ -105,7 +106,7 @@ export class AddStudentFormComponent implements OnInit {
     this.dataTableService.addStudent(_studentFormData);
   }
 
-  onSubmit(form: NgForm) {
+  onSubmit() {
     this.addStudent();
     this.closePopup();
     this.clearFormControls();

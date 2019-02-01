@@ -29,6 +29,22 @@ export class Student {
     return this._averageScore;
   }
 
+  set firstName(firstName: string) {
+    this._firstName = firstName;
+  }
+
+  set lastName(lastName: string) {
+    this._lastName = lastName;
+  }
+
+  set birthdate(birthdate: Date) {
+    this._birthdate = birthdate;
+  }
+
+  set averageScore(averageScore: number) {
+    this._averageScore = averageScore;
+  }
+
   get id(): number {
     return this._id;
   }

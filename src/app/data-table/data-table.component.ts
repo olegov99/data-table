@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+// import { EventEmitter } from '@angular/core';
 import {IPopup } from '../popup';
 import { DataTableService } from '../data-table.service';
 import { Student } from '../student';
+import { EditStudentFormComponent } from '../edit-student-form/edit-student-form.component';
 
 
 @Component({
@@ -14,6 +16,8 @@ export class DataTableComponent implements OnInit {
   private _removePopup: IPopup = {
     isOpen: false
   };
+
+  @ViewChild(EditStudentFormComponent) editStudentForm: EditStudentFormComponent;
 
   constructor(public dataTableService: DataTableService) { }
 
@@ -31,20 +35,8 @@ export class DataTableComponent implements OnInit {
     return averageScore < 3 ? true : false;
   }
 
-  sortByFirstName(): void {
-    this.dataTableService.sortByFirstName();
-  }
-
-  sortByLastName(): void {
-    this.dataTableService.sortByLastName();
-  }
-
-  sortByBirthdate(): void {
-    this.dataTableService.sortByBirthdate();
-  }
-
-  sortByScore(): void {
-    this.dataTableService.sortByScore();
+  sortBy(sorting: string): void {
+    this.dataTableService.sortBy(sorting);
   }
 
   isPopupOpen(): boolean {
@@ -73,4 +65,9 @@ export class DataTableComponent implements OnInit {
   openEditStudentPopup(student: Student): void {
     this.dataTableService.openEditStudentPopup(student);
   }
+
+  fillEditFormControls(student: Student): void {
+    this.editStudentForm.fillEditFormControls(student);
+  }
+
 }

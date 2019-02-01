@@ -26,8 +26,8 @@ export class ControlPanelComponent implements OnInit {
     this.dataTableService.setBgRed(value);
   }
 
-  getBgRed(): boolean {
-    return this.dataTableService.getBgRed();
+  isBgRed(): boolean {
+    return this.dataTableService.isBgRed();
   }
 
   setScoreFilter(): void {

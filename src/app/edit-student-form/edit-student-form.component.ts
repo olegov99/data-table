@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+
 import { DataTableService} from '../data-table.service';
 import { IStudentData} from '../student-data';
-import { identityRevealedValidator } from '../identity-revealed.directive';
-import { birthdateEdgeValidator } from '../birthdate-edge.directive';
+import { identityRevealedValidator, birthdateEdgeValidator } from '../custom-validators.directive';
 import { Student } from '../student';
 
 @Component({
@@ -13,17 +14,17 @@ import { Student } from '../student';
 })
 export class EditStudentFormComponent implements OnInit {
 
-  openedStudent: Student;
-
   studentForm = new FormGroup({
     fullName: new FormGroup({
       firstNameControl: new FormControl('', [
         Validators.required,
-        Validators.minLength(3)
+        Validators.minLength(3),
+        Validators.pattern('^[A-Za-z]+$')
       ]),
       lastNameControl: new FormControl('', [
         Validators.required,
-        Validators.minLength(3)
+        Validators.minLength(3),
+        Validators.pattern('^[A-Za-z]+$')
       ]),
     }, {validators: identityRevealedValidator}),
     birthdateControl: new FormControl('', [
@@ -104,13 +105,13 @@ export class EditStudentFormComponent implements OnInit {
     };
   }
 
-  addStudent(): void {
+  editStudent(): void {
     const _studentFormData = this.getStudentData();
-    this.dataTableService.addStudent(_studentFormData);
+    this.dataTableService.editStudent(_studentFormData);
   }
 
-  onSubmit(form: NgForm) {
-    this.addStudent();
+  onSubmit() {
+    this.editStudent();
     this.closePopup();
     this.clearFormControls();
   }
@@ -120,10 +121,6 @@ export class EditStudentFormComponent implements OnInit {
   }
 
   isPopupOpen(): boolean {
-    if (this.dataTableService.isEditStudentPopupOpen()) {
-      this.openedStudent = this.dataTableService.getOpenedStudent();
-      console.log(this.openedStudent);
-    }
     return this.dataTableService.isEditStudentPopupOpen();
   }
 
@@ -132,13 +129,21 @@ export class EditStudentFormComponent implements OnInit {
     this.clearFormControls();
   }
 
-  setFirstNameControl(): void {
-    if (this.openedStudent) {
+  fillEditFormControls(student: Student): void {
       this.studentForm.patchValue({
         fullName: {
-          firstNameControl: this.openedStudent.firstName
-        }
+          firstNameControl: student.firstName,
+          lastNameControl: student.lastName
+        },
+        birthdateControl: this.dateToString(student.birthdate),
+        averageScoreControl: String(student.averageScore)
       });
-    }
+  }
+
+  dateToString(date: Date): string {
+    const datePipe: DatePipe = new DatePipe(navigator.language);
+    const stringDateFormat = 'y-MM-dd';
+    const stringDate = datePipe.transform(date, stringDateFormat);
+    return stringDate;
   }
 }
