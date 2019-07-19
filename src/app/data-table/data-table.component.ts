@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+=======
+import { Component, OnInit, ViewChild } from '@angular/core';
+// import { EventEmitter } from '@angular/core';
+>>>>>>> fea8d329046f748a5093b9e0e7d0e40f58d09c39
 import {IPopup } from '../popup';
 import { DataTableService } from '../data-table.service';
 import { Student } from '../student';
@@ -70,6 +75,7 @@ export class DataTableComponent implements OnInit {
     this.editStudentForm.fillEditFormControls(student);
   }
 
+<<<<<<< HEAD
   isHighlightOn(): boolean {
     return this.dataTableService.isBgRed();
   }
@@ -82,4 +88,6 @@ export class DataTableComponent implements OnInit {
     return this.dataTableService.isAddStudentPopupOpen();
   }
 
+=======
+>>>>>>> fea8d329046f748a5093b9e0e7d0e40f58d09c39
 }

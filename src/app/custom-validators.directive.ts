@@ -1,4 +1,4 @@
-import {FormGroup, FormControl, ValidatorFn, ValidationErrors } from '@angular/forms';
+import {FormGroup, ValidatorFn, ValidationErrors } from '@angular/forms';
 
 export const identityRevealedValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
   const firstName = control.get('firstNameControl');

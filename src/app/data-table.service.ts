@@ -170,7 +170,11 @@ export class DataTableService {
     }
   }
 
+<<<<<<< HEAD
     createStudentInstance(studentData: IStudentData): Student {
+=======
+  createStudentInstance(studentData: IStudentData): Student {
+>>>>>>> fea8d329046f748a5093b9e0e7d0e40f58d09c39
     const _firstName = this.capitalizeFirstLetter(studentData.firstName);
     const _lastName = this.capitalizeFirstLetter(studentData.lastName);
     const _birthdate = studentData.birthdate;

@@ -13,7 +13,11 @@
         <tr class="data-table__students"
         *ngFor="let student of getStudents()"
         [ngClass]="{'bg-green': student.firstName === getSearchStudent() || student.lastName === getSearchStudent(),
+<<<<<<< HEAD
                     'bg-red': isLow(student.averageScore) && isHighlightOn()}">
+=======
+                    'bg-red': isLow(student.averageScore) && dataTableService.isBgRed()}">
+>>>>>>> fea8d329046f748a5093b9e0e7d0e40f58d09c39
           <td>{{ student.firstName }}</td>
           <td>{{ student.lastName }}</td>
           <td>{{ student.birthdate | date: 'dd/MM/yyyy' }}</td>

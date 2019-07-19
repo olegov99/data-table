@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+=======
+import { Component, OnInit } from '@angular/core';
+>>>>>>> fea8d329046f748a5093b9e0e7d0e40f58d09c39
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataTableService} from '../data-table.service';
 import { IStudentData} from '../student-data';

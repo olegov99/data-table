@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Subject } from 'rxjs';
+=======
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+>>>>>>> fea8d329046f748a5093b9e0e7d0e40f58d09c39
 
 import { DataTableService} from '../data-table.service';
 import { IStudentData} from '../student-data';
@@ -16,8 +22,11 @@ import { Student } from '../student';
 })
 export class EditStudentFormComponent implements OnInit {
 
+<<<<<<< HEAD
   @Input() isOpen: boolean;
 
+=======
+>>>>>>> fea8d329046f748a5093b9e0e7d0e40f58d09c39
   studentForm = new FormGroup({
     fullName: new FormGroup({
       firstNameControl: new FormControl('', [
@@ -125,7 +134,11 @@ export class EditStudentFormComponent implements OnInit {
   }
 
   isPopupOpen(): boolean {
+<<<<<<< HEAD
     return this.isOpen;
+=======
+    return this.dataTableService.isEditStudentPopupOpen();
+>>>>>>> fea8d329046f748a5093b9e0e7d0e40f58d09c39
   }
 
   closePopup(): void {
