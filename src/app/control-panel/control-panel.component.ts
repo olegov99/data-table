@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DataTableService} from '../data-table.service';
 
 @Component({
   selector: 'app-control-panel',
   templateUrl: './control-panel.component.html',
-  styleUrls: ['./control-panel.component.less']
+  styleUrls: ['./control-panel.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlPanelComponent implements OnInit {
   scoreFilter: boolean[];

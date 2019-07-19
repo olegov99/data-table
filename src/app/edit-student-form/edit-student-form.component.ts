@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { Subject } from 'rxjs';
 
 import { DataTableService} from '../data-table.service';
 import { IStudentData} from '../student-data';
@@ -10,9 +11,12 @@ import { Student } from '../student';
 @Component({
   selector: 'app-edit-student-form',
   templateUrl: './edit-student-form.component.html',
-  styleUrls: ['./edit-student-form.component.less']
+  styleUrls: ['./edit-student-form.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditStudentFormComponent implements OnInit {
+
+  @Input() isOpen: boolean;
 
   studentForm = new FormGroup({
     fullName: new FormGroup({
@@ -121,7 +125,7 @@ export class EditStudentFormComponent implements OnInit {
   }
 
   isPopupOpen(): boolean {
-    return this.dataTableService.isEditStudentPopupOpen();
+    return this.isOpen;
   }
 
   closePopup(): void {

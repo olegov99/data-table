@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataTableService} from '../data-table.service';
 import { IStudentData} from '../student-data';
@@ -7,9 +7,13 @@ import { identityRevealedValidator, birthdateEdgeValidator } from '../custom-val
 @Component({
   selector: 'app-add-student-form',
   templateUrl: './add-student-form.component.html',
-  styleUrls: ['./add-student-form.component.less']
+  styleUrls: ['./add-student-form.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddStudentFormComponent implements OnInit {
+
+  @Input() isOpen: boolean;
+
   studentForm = new FormGroup({
     fullName: new FormGroup({
       firstNameControl: new FormControl('', [
@@ -117,7 +121,7 @@ export class AddStudentFormComponent implements OnInit {
   }
 
   isPopupOpen(): boolean {
-    return this.dataTableService.isAddStudentPopupOpen();
+    return this.isOpen;
   }
 
   closePopup(): void {

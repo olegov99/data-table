@@ -1,6 +1,6 @@
 <app-control-panel></app-control-panel>
-<app-add-student-form></app-add-student-form>
-<app-edit-student-form></app-edit-student-form>
+<app-add-student-form [isOpen]="isAddStudentPopupOpen()"></app-add-student-form>
+<app-edit-student-form [isOpen]="isEditStudentPopupOpen()"></app-edit-student-form>
 <div class="data-table-container">
     <table class="data-table">
         <tr class="data-table__headers">
@@ -13,10 +13,10 @@
         <tr class="data-table__students"
         *ngFor="let student of getStudents()"
         [ngClass]="{'bg-green': student.firstName === getSearchStudent() || student.lastName === getSearchStudent(),
-                    'bg-red': isLow(student.averageScore) && dataTableService.isBgRed()}">
+                    'bg-red': isLow(student.averageScore) && isHighlightOn()}">
           <td>{{ student.firstName }}</td>
           <td>{{ student.lastName }}</td>
-          <td>{{ student.birthdate | date }}</td>
+          <td>{{ student.birthdate | date: 'dd/MM/yyyy' }}</td>
           <td>{{ student.averageScore }}</td>
           <td>
             <button class="data-table__students-edit-button" (click)="openEditStudentPopup(student); fillEditFormControls(student);"><i class="fas fa-edit"></i></button>
